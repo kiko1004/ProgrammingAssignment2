@@ -1,13 +1,13 @@
 makeCacheMatrix <- function(x = matrix()) {
   
-  i <- NULL
+  gama <- NULL
   set <- function(y) {
     x <<- y
-    i <<- NULL
+    gama <<- NULL
   }
   get <- function() x
-  setinverse <- function(inverse) i <<- inverse
-  getinverse <- function() i
+  setinverse <- function(inverse) gama <<- inverse
+  getinverse <- function() gama
   list(set = set,
        get = get,
        setinverse = setinverse,
@@ -19,20 +19,25 @@ makeCacheMatrix <- function(x = matrix()) {
 
 
 cacheSolve <- function(x, ...) {
-  i <- x$getinverse()
-  if (!is.null(i)) {
+  gama <- x$getinverse()
+  if (!is.null(gama)) {
     message("getting cached data")
-    return(i)
+    return(gama)
   }
   data <- x$get()
-  i <- solve(data, ...)
-  x$setinverse(i)
-  i
+  gama <- solve(data, ...)
+  x$setinverse(gama)
+  gama
 }
 
 
 
 #Test
-A <- matrix(c(1,2,3,4),2,2)
+A <- matrix(c(1,8,314),2,2)
 Alfa <- makeCacheMatrix(A)
 cacheSolve(Alfa)
+
+
+Tita <- matrix(c(224,333,555,666),2,2)
+Beta <- makeCacheMatrix(Tita)
+cacheSolve(Beta)
